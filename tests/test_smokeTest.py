@@ -9,20 +9,18 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options
+
 class TestSmokeTest():
   def setup_method(self, method):
-     options = Options()
-     options.add_argument("--headless=new")
-     self.driver = webdriver.Chrome(options=options)
-     self.vars = {}
+    self.driver = webdriver.Chrome()
+    self.vars = {}
   
   def teardown_method(self, method):
     self.driver.quit()
   
   def test_admin(self):
     self.driver.get("http://127.0.0.1:5500/cse270/teton/1.6/")
-    self.driver.set_window_size(1151, 1040)
+    self.driver.find_element(By.CSS_SELECTOR, "#hamburger-equiv > img").click()
     self.driver.find_element(By.LINK_TEXT, "Admin").click()
     elements = self.driver.find_elements(By.ID, "username")
     assert len(elements) > 0
